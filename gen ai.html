@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Quiz Generator</title>
+    <style>
+        
+    
+        body {
+            font-family: Arial;
+            color: aliceblue;
+            padding: 20px;
+            background-color: #0d0261;
+        }
+        .container {
+            background: rgb(10, 11, 27);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+        }
+        button {
+            padding: 8px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .question {
+            margin-top: 15px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>AI Quiz Generator</h2>
+
+    <input type="text" id="topic" placeholder="Enter Topic Name">
+    <button onclick="generateQuiz()">Generate Quiz</button>
+
+    <div id="quiz"></div>
+    <button onclick="submitQuiz()" id="submitBtn" style="display:none;">Submit</button>
+
+    <h3 id="result"></h3>
+</div>
+
+<script>
+
+let correctAnswers = [];
+
+function generateQuiz() {
+
+    const topic = document.getElementById("topic").value.toLowerCase();
+    const quizDiv = document.getElementById("quiz");
+    quizDiv.innerHTML = "";
+    correctAnswers = [];
+
+    if(topic === "") {
+        alert("Please enter a topic!");
+        return;
+    }
+
+    let questions = [];
+
+    // Operating System
+    if(topic.includes("operating system") || topic.includes("os")) {
+
+        questions = [
+            {
+                q: "What is the main function of an Operating System?",
+                options: ["Manage hardware resources", "Write programs", "Design websites", "Store files only"],
+                answer: 0
+            },
+            {
+                q: "Which of the following is an Operating System?",
+                options: ["Windows", "Python", "HTML", "MySQL"],
+                answer: 0
+            },
+            {
+                q: "Which scheduling algorithm uses time slices?",
+                options: ["FCFS", "Round Robin", "Priority", "SJF"],
+                answer: 1
+            },
+            {
+                q: "Which memory is volatile?",
+                options: ["ROM", "Hard Disk", "RAM", "SSD"],
+                answer: 2
+            },
+            {
+                q: "Process communication is called?",
+                options: ["IPC", "TCP", "HTTP", "FTP"],
+                answer: 0
+            }
+        ];
+
+    }
+
+    // Machine Learning
+    else if(topic.includes("machine learning")) {
+
+        questions = [
+            {
+                q: "Machine Learning is a subset of?",
+                options: ["Artificial Intelligence", "Database", "Networking", "Cyber Security"],
+                answer: 0
+            },
+            {
+                q: "Which algorithm is used for classification?",
+                options: ["Linear Regression", "Decision Tree", "K-Means", "PCA"],
+                answer: 1
+            },
+            {
+                q: "Training data is used to?",
+                options: ["Test model", "Train model", "Delete model", "Store data"],
+                answer: 1
+            },
+            {
+                q: "Which type of learning uses labeled data?",
+                options: ["Supervised Learning", "Unsupervised Learning", "Reinforcement Learning", "Deep Learning"],
+                answer: 0
+            },
+            {
+                q: "Which library is popular for ML in Python?",
+                options: ["NumPy", "TensorFlow", "Pandas", "Matplotlib"],
+                answer: 1
+            }
+        ];
+
+    }
+else if(topic.includes("artificial intelligence") || topic.includes("ai")) {
+
+    questions = [
+        {
+            q: "Artificial Intelligence is the simulation of?",
+            options: ["Human Intelligence", "Animal Behavior", "Computer Hardware", "Networks"],
+            answer: 0
+        },
+        {
+            q: "Which field is closely related to AI?",
+            options: ["Machine Learning", "Agriculture", "Civil Engineering", "Mechanical Design"],
+            answer: 0
+        },
+        {
+            q: "Which AI technique is used for decision making?",
+            options: ["Expert Systems", "HTML", "CSS", "Compiler"],
+            answer: 0
+        },
+        {
+            q: "Which language is commonly used for AI?",
+            options: ["Python", "HTML", "SQL", "CSS"],
+            answer: 0
+        },
+        {
+            q: "AI is widely used in?",
+            options: ["Robotics", "Web Design Only", "Printing", "Typing"],
+            answer: 0
+        }
+    ];
+
+}
+else if(topic.includes("full stack") || topic.includes("fullstack")) {
+
+    questions = [
+        {
+            q: "Full Stack Development means working on?",
+            options: ["Frontend and Backend", "Only Frontend", "Only Backend", "Database Only"],
+            answer: 0
+        },
+        {
+            q: "Which is a frontend technology?",
+            options: ["HTML", "Node.js", "MongoDB", "Express"],
+            answer: 0
+        },
+        {
+            q: "Which is a backend technology?",
+            options: ["Node.js", "CSS", "HTML", "Bootstrap"],
+            answer: 0
+        },
+        {
+            q: "Which database is used in full stack?",
+            options: ["MongoDB", "Photoshop", "Excel", "PowerPoint"],
+            answer: 0
+        },
+        {
+            q: "MERN stack stands for?",
+            options: ["MongoDB Express React Node", "MySQL Express React Node", "MongoDB HTML React Node", "MongoDB Express Ruby Node"],
+            answer: 0
+        }
+    ];
+
+}
+
+    // Computer Systems
+    else if(topic.includes("computer system")) {
+
+        questions = [
+            {
+                q: "CPU stands for?",
+                options: ["Central Processing Unit", "Computer Personal Unit", "Central Program Unit", "Control Processing Unit"],
+                answer: 0
+            },
+            {
+                q: "Which component stores data permanently?",
+                options: ["RAM", "Cache", "Hard Disk", "Register"],
+                answer: 2
+            },
+            {
+                q: "Which is an input device?",
+                options: ["Monitor", "Keyboard", "Printer", "Speaker"],
+                answer: 1
+            },
+            {
+                q: "ALU is part of?",
+                options: ["CPU", "RAM", "Hard Disk", "Motherboard"],
+                answer: 0
+            },
+            {
+                q: "Which memory is fastest?",
+                options: ["RAM", "Cache", "Hard Disk", "ROM"],
+                answer: 1
+            }
+        ];
+
+    }
+
+    else {
+        alert("Topic not available. Try: Operating System, Machine Learning, Computer System");
+        return;
+    }
+
+    questions.forEach((item, index) => {
+
+        correctAnswers.push(item.answer);
+
+        let questionHTML = `<div class="question">
+        <p>${index + 1}. ${item.q}</p>`;
+
+        item.options.forEach((option, i) => {
+
+            questionHTML += `
+            <input type="radio" name="q${index}" value="${i}"> ${option}<br>
+            `;
+
+        });
+
+        questionHTML += `</div>`;
+        quizDiv.innerHTML += questionHTML;
+
+    });
+
+    document.getElementById("submitBtn").style.display = "block";
+    document.getElementById("result").innerHTML = "";
+
+}
+
+function submitQuiz() {
+
+    let score = 0;
+
+    correctAnswers.forEach((answer, index) => {
+
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+
+        if(selected && parseInt(selected.value) === answer) {
+            score++;
+        }
+
+    });
+
+    document.getElementById("result").innerHTML =
+        "Your Score: " + score + " / " + correctAnswers.length;
+
+}
+
+</script>
+
+</body>
+</html>
